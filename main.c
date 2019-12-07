@@ -17,20 +17,22 @@ char * command_line() {
   return prompt;
 }
 
-// taken from previous assignment
+// adapted from previous assignment
 char ** parse_args( char * line, char * limit ){
   char ** args = malloc(256);
   char * token;
   int i = 0;
+  // counts number of tokens
   while (token){
-    token = strsep(&line, limit); // separate based on args (space)
+    // all items on the command line are to be separated by a single space
+    token = strsep(&line, limit);
     args[i] = token;
     i++;
   }
   return args;
 }
 
-// Return 1 if pipe, 0 if not
+// Return 1 if pipe, 0 if not -- SINGLE 
 int special(char * args){
   if (strstr(args,"|")){
     printf("Pipe successful\n" );
