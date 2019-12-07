@@ -9,7 +9,6 @@
 #include <limits.h>
 // need to clean that up later
 
-
 char * command_line() {
   char * prompt = (char *)calloc(256,1);
   printf("$ " );
@@ -23,19 +22,18 @@ char ** parse_args( char * line, char * limit ){
   char ** args = malloc(256);
   char * token;
   int i = 0;
-  while(token){
-    // Seperate based on spaces between args
-    token = strsep(&line, limit);
+  while (token){
+    token = strsep(&line, limit); // separate based on args (space)
     args[i] = token;
     i++;
   }
   return args;
 }
 
-// pipes!
+// Return 1 if pipe, 0 if not
 int special(char * args){
   if (strstr(args,"|")){
-    printf("there is a pipe here\n" );
+    printf("Pipe successful\n" );
     return 1;
   }
   return 0;
@@ -59,7 +57,7 @@ int redirect_pipe(char ** args){
     pclose(read);
     FILE *write=popen(output,"w");
 
-    fprintf(write,"%s",cmd); //send s to write
+    fprintf(write,"%s",cmd);
     pclose(write);
     return 0;
 }
@@ -68,48 +66,47 @@ int main(){
   int status;
   char* str = malloc(50);
   while (1){
-  int i = 0;
-  str = command_line();
-  char ** full_arr = parse_args(str, ";");
-  while(full_arr[i]){
-    printf("----------------------------------------\n" );
-    printf("full_arr[%d]: %s\n", i, full_arr[i]);
-    int j = 0;
-    if (special(full_arr[i])){
+    int i = 0;
+    str = command_line();
+    char ** full_arr = parse_args(str, ";");
+    while(full_arr[i]){
+      printf("----------------------------------------\n" );
+      printf("full_arr[%d]: %s\n", i, full_arr[i]);
+      int j = 0;
+      if (special(full_arr[i])){
         char ** full_arr2 = parse_args(str, "|");
         redirect_pipe(full_arr2);
-    }
-    else{
-      printf("oh no \n" );
-      char ** arr = parse_args(full_arr[i] , " ");
-      while(arr[j]){
-        printf("arr[%d]: %s\n", j, arr[j]);
-        j++;
       }
-      //printf("changed directory!!\n" );
-      if (!strcmp(arr[0], "cd")){
-        chdir(arr[1]);
-      }
-      else if (!strcmp(arr[0], "exit")){
-        return 0;
-      }
-      else{
-        // child
-        int firstborn = fork();
-        if (!firstborn){
+      else {
+        printf("clipped \n" );
+        char ** arr = parse_args(full_arr[i] , " ");
+        while(arr[j]){
+          printf("arr[%d]: %s\n", j, arr[j]);
+          j++;
+        }
+        if (!strcmp(arr[0], "cd")){
+          chdir(arr[1]);
+        }
+        else if (!strcmp(arr[0], "exit")){
+          return 0;
+        }
+        else {
+          // child
+          int firstborn = fork();
+          if (!firstborn){
             printf("-------------------------------\nEXECVP Testing-------------------------\n");
             execvp(arr[0],arr);
             return 0;
-        }
-            else {
-              // parent
-              int child_id = wait(&status);
-            }
           }
-      i++;
+          else {
+            // parent
+            int child_id = wait(&status);
+          }
+        }
+        i++;
+      }
     }
   }
-}
   printf("finished the full_arr\n");
   return 0;
 }
