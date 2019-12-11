@@ -80,7 +80,7 @@ int redirect_input(char * line) {
     char ** args = parse_args(arg[0], " ");
     int file = open(arg[1], O_RDONLY, 0644);
     dup(STDIN_FILENO);
-    dup2(fd, STDIN_FILENO);
+    dup2(file, STDIN_FILENO);
     fflush(stdout);
     execvp(args[0], args);
     close(file);

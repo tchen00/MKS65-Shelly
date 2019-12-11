@@ -30,14 +30,13 @@ int main(){
               char ** arr = malloc(256);
               if (!redirect_num){
                   arr = parse_args(user_input[i], " ");
+                  if (!strcmp(arr[0], "cd")){
+                      chdir(arr[1]);
+                  }
+                  if (!strcmp(arr[0], "exit")){
+                      return 0;
+                  }
               }
-              if (!strcmp(arr[0], "cd")){
-                  chdir(arr[1]);
-              }
-              if (!strcmp(arr[0], "exit")){
-                  return 0;
-              }
-          }
           int first = fork();
           if (!first){
               if (redirect_num == 2){
@@ -51,6 +50,10 @@ int main(){
                 return 0;
               }
           }
+          else {
+            int child = wait(&status);
+          }
+        }
           i++;
         }
     }
