@@ -7,66 +7,52 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 #include <limits.h>
+#include "shell.h"
 // need to clean that up later
 
-
-
-
-// Return 1 if pipe, 0 if not -- SINGLE
-int special(char * args){
-  if (strstr(args,"|")){
-    printf("Pipe successful\n" );
-    return 1;
-  }
-  return 0;
-}
-
-
 int main(){
-  int status;
-  char* str = malloc(50);
-  while (1){
-    int i = 0;
-    str = command_line();
-    char ** full_arr = parse_args(str, ";");
-    while(full_arr[i]){
-      printf("----------------------------------------\n" );
-      printf("full_arr[%d]: %s\n", i, full_arr[i]);
-      int j = 0;
-      if (special(full_arr[i])){
-        char ** full_arr2 = parse_args(str, "|");
-        redirect_pipe(full_arr2);
-      }
-      else {
-        printf("clipped \n" );
-        char ** arr = parse_args(full_arr[i] , " ");
-        while(arr[j]){
-          printf("arr[%d]: %s\n", j, arr[j]);
-          j++;
-        }
-        if (!strcmp(arr[0], "cd")){
-          chdir(arr[1]);
-        }
-        else if (!strcmp(arr[0], "exit")){
-          return 0;
-        }
-        else {
-          // child
-          int firstborn = fork();
-          if (!firstborn){
-            printf("-------------------------------\nEXECVP Testing-------------------------\n");
-            execvp(arr[0],arr);
-            return 0;
+    int status;
+    char* str = malloc(50);
+    while (1){
+        int i = 0;
+        str = command_line();
+        char ** user_input = parse_args(str, ";");
+        while (user_input[i]){
+          //printf("----------------------------------------\n" );
+          //printf("user_input[%d]: %s\n", i, user_input[i]);
+          int j = 0;
+          int redirect_num = find_redirect(user_input[i]);
+          if (redirect_num == 1){
+              char ** user_input_2 = parse_args(str, "|");
+              redirect_pipe(user_input_2);
           }
-          else {
-            // parent
-            int child_id = wait(&status);
+          else{
+              char ** arr = malloc(256);
+              if (!redirect_num){
+                  arr = parse_args(user_input[i], " ");
+              }
+              if (!strcmp(arr[0], "cd")){
+                  chdir(arr[1]);
+              }
+              if (!strcmp(arr[0], "exit")){
+                  return 0;
+              }
           }
+          int first = fork();
+          if (!first){
+              if (redirect_num == 2){
+                  redirect_output(user_input[i]);
+              }
+              else if (redirect_num == 3){
+                redirect_input(user_input[i]);
+              }
+              else{
+                execvp(arr[0], arr);
+                return 0;
+              }
+          }
+          i++;
         }
-        i++;
-      }
     }
-  }
-  printf("finished the full_arr\n");
-  return 0;
+    return 0;
 }
