@@ -1,4 +1,4 @@
-#Project 1: :shell:Shell[ing]:shell: out commands
+# Project 1: :shell:Shell[ing]:shell: out commands
 ### Description & Features of the Shell
 This is my attempt at writing a bash shell.
 It includes the following functional features:
