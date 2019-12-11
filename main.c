@@ -22,7 +22,6 @@ int special(char * args){
 }
 
 
-
 int main(){
   int status;
   char* str = malloc(50);
