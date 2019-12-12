@@ -8,10 +8,15 @@ It includes the following functional features:
 - Reads and separates multiple commands on one line
 - Implements simple redirection using > (redirecting stdout) and < (redirecting stdin)
 - Implement simple pipes using popen()
+### Extra Features
+- Compiles the make file :)
 
 ### Attempted but Unsuccessful Features
 - Implementing multiple pipes
+- Double redirection in the same line
+- Handling white space
 
 ### Bugs In the Program
+- None during testing
 
 ### Function Header

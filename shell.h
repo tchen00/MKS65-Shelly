@@ -9,13 +9,11 @@
 #include <limits.h>
 #include <pwd.h>
 
-char * trim_white(char * str);
 char * command_line();
 char ** parse_args( char * line, char * limit );
-
 int redirect_pipe(char ** args);
 int find_redirect(char * args);
 int redirect_input(char * line);
 int redirect_output(char * line);
-
+char * trim_white(char * str);
 int main();

@@ -86,3 +86,21 @@ int redirect_input(char * line) {
     close(file);
     return 0;
 }
+
+char * trim_white(char * str) {
+    // if there is a white space before the string
+    while (*str == ' ') {
+        str++;
+    }
+    // if there is white space after the string
+    int i = strlen(str)-1;
+    for (; i > 1 ; i--){
+        if (str[i]==' ' || str[i] == '\n' ){
+            str[i] = 0;
+        }
+        else {
+            break;
+        }
+    }
+    return str; // updated string
+}
