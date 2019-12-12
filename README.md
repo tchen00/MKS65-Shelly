@@ -44,6 +44,6 @@ shell.c
   - made to make testing WAY easier
   - takes in input of char * str and returns a string with unnecessary white space eliminated.
 
-  main.c
-  - contains the *drum roll please* main() function
-  - handles everything you see after you run make run 
+main.c
+- contains the *drum roll please* main() function
+- handles everything you see after you run make run 
