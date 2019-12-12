@@ -1,4 +1,4 @@
-# Project 1: :shell:Shell[ing]:shell: out commands
+# :shell:Project 1: Shell[ing] out commands:shell:
 ### Description & Features of the Shell
 This is my attempt at writing a bash shell.
 It includes the following functional features:
@@ -10,13 +10,14 @@ It includes the following functional features:
 - Implement simple pipes using popen()
 ### Extra Features
 - Compiles the make file :)
+- Handles excess white spaces (before and after)
 
 ### Attempted but Unsuccessful Features
 - Implementing multiple pipes
 - Double redirection in the same line
 
 ### Bugs In the Program
-- None during testing
+- None during testing (Hopefully)
 
 ### Function Header
 shell.c
@@ -45,5 +46,5 @@ shell.c
   - takes in input of char * str and returns a string with unnecessary white space eliminated.
 
 main.c
-- contains the *drum roll please* main() function
-- handles everything you see after you run make run 
+- contains the *(drum roll please)* main() function
+- handles everything you see after you run make run
