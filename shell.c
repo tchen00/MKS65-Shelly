@@ -37,17 +37,13 @@ int redirect_pipe(char ** args){
     char * output = args[1];
     char line[256];
     char cmd[256];
-
     FILE *read = popen(input,"r");
-
     while (fgets(line,256,read)) {
       line[sizeof(line)-1] = 0;
       strcat(cmd,line);
     }
-
     pclose(read);
     FILE *write = popen(output,"w");
-
     fprintf(write,"%s",cmd);
     pclose(write);
     return 0;
@@ -87,7 +83,7 @@ int redirect_input(char * line) {
     return 0;
 }
 
-char * trim_white(char * str) {
+char * white_space(char * str) {
     // if there is a white space before the string
     while (*str == ' ') {
         str++;
@@ -95,7 +91,7 @@ char * trim_white(char * str) {
     // if there is white space after the string
     int i = strlen(str)-1;
     for (; i > 1 ; i--){
-        if (str[i]==' ' || str[i] == '\n' ){
+        if (str[i] == ' ' || str[i] == '\n' ){
             str[i] = 0;
         }
         else {

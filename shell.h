@@ -15,5 +15,5 @@ int redirect_pipe(char ** args);
 int find_redirect(char * args);
 int redirect_input(char * line);
 int redirect_output(char * line);
-char * trim_white(char * str);
+char * white_space(char * str);
 int main();

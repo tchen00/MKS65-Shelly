@@ -20,6 +20,7 @@ int main(){
         while (user_input[i]){
           //printf("----------------------------------------\n" );
           //printf("user_input[%d]: %s\n", i, user_input[i]);
+          user_input[i] = white_space(user_input[i]);
           int j = 0;
           int redirect_num = find_redirect(user_input[i]);
           if (redirect_num == 1){
