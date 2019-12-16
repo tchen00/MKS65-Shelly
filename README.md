@@ -17,7 +17,9 @@ It includes the following functional features:
 - Double redirection in the same line
 
 ### Bugs In the Program
-- None during testing (Hopefully)
+- Redirection doesn't work from time to time
+  - When testing it with wholist, it doesn't create it properly
+  - Formatting of redirection is wonky (tried to fix this)
 
 ### Function Header
 shell.c

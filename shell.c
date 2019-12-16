@@ -6,8 +6,11 @@
 #include <unistd.h>
 
 char * command_line() {
+  char *host = malloc(256);
+  gethostname(host, 255);
+  struct passwd *user = getpwuid(getuid());
   char *prompt = (char *)calloc(256,1);
-  printf("$ " );
+  printf("(TAMSTER HAMSTER) %s: %s $ ", host, user->pw_name);
   fgets(prompt,256,stdin);
   prompt[strlen(prompt)-1] = 0;
   return prompt;
